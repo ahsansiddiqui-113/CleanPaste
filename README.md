@@ -47,6 +47,22 @@ Images are never uploaded. OCR (Tesseract.js), PII detection and canvas redactio
 
 Requests are rejected unless the `X-Signature` HMAC matches. Purchases are stored by email, so they apply even if the buyer signs up afterwards. Use the same email at checkout and signup.
 
+## Deploy (Railway, Docker)
+
+The repo includes a `Dockerfile` (PHP 8.2 + Apache, serving only `public/`).
+
+1. Push this repo to GitHub (`.env` is git-ignored; never commit it).
+2. In Railway: **New Project → Deploy from GitHub repo**, then **+ New → Database → MySQL** in the same project.
+3. On the app service, add these variables (Railway reference variables let you point at the MySQL service):
+   - `DB_HOST=${{MySQL.MYSQLHOST}}`, `DB_PORT=${{MySQL.MYSQLPORT}}`, `DB_NAME=${{MySQL.MYSQLDATABASE}}`, `DB_USER=${{MySQL.MYSQLUSER}}`, `DB_PASS=${{MySQL.MYSQLPASSWORD}}`
+   - `RUN_MIGRATIONS=1` (creates the tables on first boot, skips if they exist)
+   - the `LS_*` billing variables from `.env.example`
+4. **Settings → Networking → Generate Domain** to get the public HTTPS URL. Your webhook is `https://<domain>/api/webhook.php`.
+
+The app also reads Railway's own `MYSQL*` variable names if `DB_*` are not set. Render has no managed MySQL as far as we know, so there you'd need an external MySQL database.
+
+You can run `php tools/migrate.php` any time to create missing tables.
+
 ## Project layout
 
 ```text

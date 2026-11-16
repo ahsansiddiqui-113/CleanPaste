@@ -9,7 +9,9 @@ final class Session
     public static function start(): void
     {
         if (session_status() === PHP_SESSION_ACTIVE) return;
-        $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+        // Behind Railway/Render the proxy terminates TLS and forwards plain HTTP.
+        $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
         session_name('cloakpaste');
         session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $https, 'httponly' => true, 'samesite' => 'Lax']);
         session_start();

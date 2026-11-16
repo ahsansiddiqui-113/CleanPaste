@@ -1,0 +1,7 @@
+.git
+.env
+.claude
+vendor
+node_modules
+*.md
+Dockerfile
