@@ -6,6 +6,10 @@ set -e
 rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*
 a2enmod mpm_prefork >/dev/null 2>&1 || true
 
+# Diagnostics shown in the host's deploy log
+echo "entrypoint: enabled MPM files: $(ls /etc/apache2/mods-enabled | grep -i mpm | tr '\n' ' ')"
+echo "entrypoint: other mpm references: $(grep -rli 'mpm_' /etc/apache2/apache2.conf /etc/apache2/conf-enabled /etc/apache2/sites-enabled 2>/dev/null | tr '\n' ' ')"
+
 # Hosts like Railway/Render tell the container which port to listen on via $PORT.
 PORT="${PORT:-8080}"
 sed -ri "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
