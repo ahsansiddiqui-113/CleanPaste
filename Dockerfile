@@ -4,6 +4,10 @@ FROM php:8.2-apache
 RUN docker-php-ext-install pdo_mysql \
  && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+# mod_php needs the prefork MPM; make sure it is the only one enabled
+RUN a2dismod mpm_event mpm_worker >/dev/null 2>&1 || true \
+ && a2enmod mpm_prefork
+
 # Serve only public/ so .env, src/ and schema.sql are never reachable over HTTP
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \

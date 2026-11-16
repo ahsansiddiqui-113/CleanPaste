@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+# Apache allows exactly one MPM. Some hosts end up with several enabled ("AH00534"),
+# so force prefork (required by mod_php) at every start.
+rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*
+a2enmod mpm_prefork >/dev/null 2>&1 || true
+
 # Hosts like Railway/Render tell the container which port to listen on via $PORT.
 PORT="${PORT:-8080}"
 sed -ri "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
