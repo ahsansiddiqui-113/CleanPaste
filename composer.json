@@ -1,0 +1,7 @@
+{
+    "name": "cloakpaste/app",
+    "description": "CloakPaste backend: auth, saved rules, billing webhooks",
+    "type": "project",
+    "require": { "php": ">=8.0", "ext-pdo": "*", "ext-json": "*" },
+    "autoload": { "psr-4": { "CloakPaste\\": "src/" } }
+}
