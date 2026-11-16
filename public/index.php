@@ -25,6 +25,11 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($appName) ?> - Paste. Redact. Share safely.</title>
     <meta name="description" content="Paste a screenshot and automatically redact emails, phone numbers, IBANs, cards and IDs in seconds. Everything runs in your browser - nothing is uploaded.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#4f46e5">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { brand: { 50:'#eef2ff', 100:'#e0e7ff',500:'#6366f1', 600:'#4f46e5', 700:'#4338ca' } } } } };
