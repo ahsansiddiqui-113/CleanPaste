@@ -115,7 +115,7 @@ try {
         </div>
 
         <div class="grid gap-6 lg:grid-cols-[1fr_300px]">
-            <div class="checker overflow-auto rounded-xl border border-slate-200 bg-white p-2">
+            <div class="checker self-start overflow-auto rounded-xl border border-slate-200 bg-white p-2">
                 <canvas id="editorCanvas" class="mx-auto block max-w-full cursor-crosshair"></canvas>
             </div>
 
